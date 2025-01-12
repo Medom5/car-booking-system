@@ -13,7 +13,7 @@ public class CarService {
         return carDAO.getAllCars();
     }
 
-    public Car getCarById(String regNumber) {
+    public Car getCar(String regNumber) {
         for(Car car : getAllCars()) {
             if(car.getRegNumber().equals(regNumber)) {
                 return car;

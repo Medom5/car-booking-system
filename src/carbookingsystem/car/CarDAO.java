@@ -13,8 +13,4 @@ public class CarDAO {
     public List<Car> getAllCars() {
         return new ArrayList<>(cars);
     }
-
-    public void addCar(Car car) {
-        cars.add(car);
-    }
 }
