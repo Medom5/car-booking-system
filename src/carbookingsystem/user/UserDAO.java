@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 class UserDAO {
-    private static  final List<User> users;
+    private static final List<User> users;
 
     static {
         users = new ArrayList<>();
