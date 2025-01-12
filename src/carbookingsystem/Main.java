@@ -25,7 +25,9 @@ public class Main {
         while (isRunning) {
             try {
                 displayMenu();
-                int choice = scanner.nextInt();
+                System.out.print("Select action:");
+                String input = scanner.nextLine();
+                int choice = Integer.parseInt(input);
                 if (choice < 1 || choice > 7) {
                     throw new InvalidNumberException("Invalid choice! Please enter a valid Integer between 1 and 7");
                 }
@@ -62,7 +64,7 @@ public class Main {
             return;
         }
 
-        System.out.println("Select User ID");
+        System.out.println("Select User ID:");
         String userId = scanner.nextLine();
 
         try {
