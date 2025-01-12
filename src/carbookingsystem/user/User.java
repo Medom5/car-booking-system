@@ -1,8 +1,9 @@
 package carbookingsystem.user;
+
 import java.util.Objects;
 import java.util.UUID;
 
-class User {
+public class User {
     private UUID id;
     private String name;
 
