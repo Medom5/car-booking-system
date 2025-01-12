@@ -1,19 +1,20 @@
 package carbookingsystem.car;
+
 import java.math.BigDecimal;
 import java.util.Objects;
 
-public class Car {
-    private int regNumber;
+ public class Car {
+    private String regNumber;
     private BigDecimal rentalPricePerDay;
     private Brand brand;
     private boolean  isElectric;
 
 
-    public Car(int regNumber, Boolean isElectric, BigDecimal rentalPricePerDay, Brand brand) {
+    public Car(String regNumber, BigDecimal rentalPricePerDay, Brand brand, Boolean isElectric) {
         this.regNumber = regNumber;
-        this.isElectric = isElectric;
         this.rentalPricePerDay = rentalPricePerDay;
         this.brand = brand;
+        this.isElectric = isElectric;
     }
 
     public Boolean getIsElectric() {
@@ -24,11 +25,11 @@ public class Car {
         this.isElectric = isElectric;
     }
 
-    public int getRegNumber() {
+    public String getRegNumber() {
         return regNumber;
     }
 
-    public void setRegNumber(int regNumber) {
+    public void setRegNumber(String regNumber) {
         this.regNumber = regNumber;
     }
 
@@ -48,7 +49,7 @@ public class Car {
         this.brand = brand;
     }
 
-    @java.lang.Override
+    @Override
     public java.lang.String toString() {
         return "Car{" +
                 "regNumber=" + regNumber +
@@ -58,12 +59,14 @@ public class Car {
                 '}';
     }
 
+    @Override
     public boolean equals(Object object) {
         if (object == null || getClass() != object.getClass()) return false;
         Car car = (Car) object;
         return getRegNumber() == car.getRegNumber() && java.util.Objects.equals(getRentalPricePerDay(), car.getRentalPricePerDay()) && java.util.Objects.equals(getBrand(), car.getBrand()) && java.util.Objects.equals(getIsElectric(), car.getIsElectric());
     }
 
+    @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), getRegNumber(), getRentalPricePerDay(), getBrand(), getIsElectric());
     }
