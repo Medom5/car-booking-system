@@ -35,6 +35,7 @@ public class BookingService {
                 UUID bookingId = UUID.randomUUID();
                 Booking booking = new Booking(bookingId, car, user, LocalDateTime.now());
                 bookingDAO.book(booking);
+                return bookingId;
             }
         }
         throw new IllegalStateException("Already booked. Car with regNumber " + regNumber);
