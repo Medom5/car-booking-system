@@ -3,19 +3,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 class UserDAO {
-    private final List<User> users;
+    private static  final List<User> users;
 
-    public UserDAO() {
+    static {
         users = new ArrayList<>();
     }
 
-   public void addUser(User user) {
-        users.add(user);
-   }
-
     public List<User> getAllUsers() {
-        return users;
+        return new ArrayList<>(users);
     }
-
 
 }
