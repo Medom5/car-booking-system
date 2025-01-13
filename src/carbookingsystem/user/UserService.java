@@ -4,14 +4,14 @@ import java.util.List;
 import java.util.UUID;
 
 public class UserService {
-    private UserDao userDAO;
+    private UserDaoImpl userDAOImpl;
 
     public UserService(){
-        userDAO = new UserDao();
+        userDAOImpl = new UserDaoImpl();
     }
 
     public List<User> getAllUsers() {
-        return userDAO.getAllUsers();
+        return userDAOImpl.getAllUsers();
     }
 
     public User getUserById(UUID id) {

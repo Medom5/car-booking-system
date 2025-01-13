@@ -38,7 +38,7 @@ public class BookingService {
                 return bookingId;
             }
         }
-        throw new IllegalStateException("Already booked. Car with regNumber " + regNumber);
+        throw new IllegalStateException("Doesn't exist or already booked. Car with regNumber " + regNumber);
     }
 
     public List<Car> getUserBookedCars(UUID userId) {
