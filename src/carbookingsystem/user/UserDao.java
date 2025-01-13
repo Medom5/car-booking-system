@@ -4,7 +4,7 @@ import java.util.UUID;
 import java.util.List;
 import java.util.ArrayList;
 
-class UserDAO {
+class UserDao {
     private static final List<User> users;
 
     static {

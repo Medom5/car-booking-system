@@ -4,10 +4,10 @@ import java.util.List;
 import java.util.UUID;
 
 public class UserService {
-    private UserDAO userDAO;
+    private UserDao userDAO;
 
     public UserService(){
-        userDAO = new UserDAO();
+        userDAO = new UserDao();
     }
 
     public List<User> getAllUsers() {

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class BookingDAO {
+public class BookingDao {
     private static final List<Booking> bookings;
 
     static {

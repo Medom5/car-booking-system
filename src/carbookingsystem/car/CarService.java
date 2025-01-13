@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CarService {
-    private CarDAO carDAO;
+    private CarDao carDAO;
 
     public CarService() {
-         carDAO = new CarDAO();
+         carDAO = new CarDao();
     }
     public List<Car> getAllCars() {
         return carDAO.getAllCars();

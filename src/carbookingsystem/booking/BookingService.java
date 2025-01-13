@@ -11,12 +11,12 @@ import java.util.ArrayList;
 import java.time.LocalDateTime;
 
 public class BookingService {
-    private final BookingDAO bookingDAO;
+    private final BookingDao bookingDAO;
     private final CarService carService;
     private final UserService userService;
 
     public BookingService() {
-        bookingDAO = new BookingDAO();
+        bookingDAO = new BookingDao();
         carService = new CarService();
         userService = new UserService();
     }
