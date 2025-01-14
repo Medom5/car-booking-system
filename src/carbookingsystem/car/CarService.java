@@ -6,9 +6,10 @@ import java.util.List;
 public class CarService {
     private CarDao carDAO;
 
-    public CarService() {
-         carDAO = new CarDao();
+    public CarService(CarDao carDAO) {
+        this.carDAO = carDAO;
     }
+
     public List<Car> getAllCars() {
         return carDAO.getAllCars();
     }

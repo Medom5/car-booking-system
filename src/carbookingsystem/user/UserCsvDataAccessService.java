@@ -8,15 +8,16 @@ import java.util.List;
 import java.util.UUID;
 
 public class UserCsvDataAccessService implements UserDao {
+    private final String filePath;
 
-    public UserCsvDataAccessService() {
+    public UserCsvDataAccessService(final String filePath) {
+        this.filePath = filePath;
     }
 
     @Override
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
 
-        String filePath = "src/carbookingsystem/users.csv";
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = br.readLine()) != null) {
