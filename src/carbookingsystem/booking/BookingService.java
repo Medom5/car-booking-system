@@ -9,6 +9,7 @@ import java.util.UUID;
 import java.util.List;
 import java.util.ArrayList;
 import java.time.LocalDateTime;
+import java.util.stream.Collectors;
 
 public class BookingService {
     private final BookingDao bookingDAO;
@@ -28,17 +29,17 @@ public class BookingService {
             throw new IllegalStateException("No car available for renting");
         }
 
-        for (Car availableCar : availableCars) {
-            // Ensuring that the car a user wants to book is still available at the time the booking is processed
-            if (availableCar.getRegNumber().equals(regNumber)) {
-                Car car = carService.getCar(regNumber);
-                UUID bookingId = UUID.randomUUID();
-                Booking booking = new Booking(bookingId, car, user, LocalDateTime.now());
-                bookingDAO.book(booking);
-                return bookingId;
-            }
-        }
-        throw new IllegalStateException("Doesn't exist or already booked. Car with regNumber " + regNumber);
+        // Ensuring that the car a user wants to book is still available at the time the booking is processed
+        Car car = availableCars.stream()
+                .filter(availableCar -> availableCar.getRegNumber().equals(regNumber))
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("Doesn't exist or already booked. Car with regNumber " + regNumber));
+
+        UUID bookingId = UUID.randomUUID();
+        Booking booking = new Booking(bookingId, car, user, LocalDateTime.now());
+        bookingDAO.book(booking);
+
+        return bookingId;
     }
 
     public List<Car> getUserBookedCars(UUID userId) {
@@ -48,15 +49,11 @@ public class BookingService {
         }
 
         List<Booking> bookings = bookingDAO.getAllBookings();
-        List<Car> userCars = new ArrayList<>();
 
-        for (Booking booking : bookings) {
-            // Only include the cars that are not cancelled
-            if (booking.getUser().getId().equals(userId) && !booking.isCancelled()) {
-                userCars.add(booking.getCar());
-            }
-        }
-        return userCars;
+        return bookings.stream()
+                .filter(booking -> booking.getUser().getId().equals(userId) && !booking.isCancelled())
+                .map(Booking::getCar)
+                .collect(Collectors.toList());
     }
 
 
@@ -69,7 +66,9 @@ public class BookingService {
     }
 
     public List<Car> getCars(List<Car> cars) {
-        if (cars.isEmpty()) return new ArrayList<>();
+        if (cars.isEmpty()) {
+            return new ArrayList<>();
+        }
 
         List<Booking> carBookings = bookingDAO.getAllBookings();
 
@@ -77,21 +76,11 @@ public class BookingService {
             return new ArrayList<>(cars);
         }
 
-        List<Car> availableCars = new ArrayList<>();
 
-        for (Car car : cars) {
-            boolean booked = false;
-            for (Booking booking : carBookings) {
-                if (booking.getCar().equals(car) && !booking.isCancelled()) {
-                    booked = true;
-                    break;
-                }
-            }
-            if (!booked) {
-                availableCars.add(car);
-            }
-        }
-        return availableCars;
+        return cars.stream()
+                .filter(car -> carBookings.stream()
+                        .noneMatch(booking -> booking.getCar().equals(car) && !booking.isCancelled()))
+                .collect(Collectors.toList());
     }
 
     public List<Booking> getBookings() {
@@ -101,11 +90,11 @@ public class BookingService {
     public void cancelBooking(UUID bookingId) {
         Booking booking = bookingDAO.getBooking(bookingId);
 
-        if (booking == null) {
-            throw new IllegalStateException("No booking found with ID: " + bookingId);
+        if (booking != null) {
+            bookingDAO.cancelBooking(booking);
         }
 
-        bookingDAO.cancelBooking(booking);
+        throw new IllegalStateException("No booking found with ID: " + bookingId);
     }
 
 }

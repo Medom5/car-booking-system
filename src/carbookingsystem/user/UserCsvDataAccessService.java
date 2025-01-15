@@ -3,9 +3,13 @@ package carbookingsystem.user;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class UserCsvDataAccessService implements UserDao {
     private final String filePath;
@@ -16,21 +20,15 @@ public class UserCsvDataAccessService implements UserDao {
 
     @Override
     public List<User> getAllUsers() {
-        List<User> users = new ArrayList<>();
-
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] values = line.split(",");
-                if (values.length == 2) {
-                    UUID id = UUID.fromString(values[0].trim());
-                    String name = values[1].trim();
-                    users.add(new User(id, name));
-                }
-            }
+        try (Stream<String> lines = Files.lines(Paths.get(filePath))) {
+            return  lines
+                    .map(line -> line.split(","))
+                    .filter(values -> values.length == 2)
+                    .map(values -> new User(UUID.fromString(values[0].trim()),values[1].trim()))
+                    .collect(Collectors.toList());
         } catch (IOException e) {
             System.err.println("Error reading CSV file: " + e.getMessage());
+            return List.of();
         }
-        return users;
     }
 }

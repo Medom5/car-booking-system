@@ -59,15 +59,15 @@ import java.util.Objects;
                 '}';
     }
 
-    @Override
-    public boolean equals(Object object) {
-        if (object == null || getClass() != object.getClass()) return false;
-        Car car = (Car) object;
-        return getRegNumber() == car.getRegNumber() && java.util.Objects.equals(getRentalPricePerDay(), car.getRentalPricePerDay()) && java.util.Objects.equals(getBrand(), car.getBrand()) && java.util.Objects.equals(getIsElectric(), car.getIsElectric());
-    }
+     @Override
+     public boolean equals(Object o) {
+         if (o == null || getClass() != o.getClass()) return false;
+         Car car = (Car) o;
+         return isElectric == car.isElectric && Objects.equals(getRegNumber(), car.getRegNumber()) && Objects.equals(getRentalPricePerDay(), car.getRentalPricePerDay()) && getBrand() == car.getBrand();
+     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), getRegNumber(), getRentalPricePerDay(), getBrand(), getIsElectric());
-    }
-}
+     @Override
+     public int hashCode() {
+         return Objects.hash(getRegNumber(), getRentalPricePerDay(), getBrand(), isElectric);
+     }
+ }

@@ -16,12 +16,11 @@ public class BookingDao {
     }
 
     public Booking getBooking(UUID bookingId) {
-        for (Booking booking : bookings) {
-            if (booking.getBookingId().equals(bookingId)) {
-                return booking;
-            }
-        }
-        return null;
+
+        return bookings.stream()
+                .filter(booking -> booking.getBookingId().equals(bookingId))
+                .findFirst()
+                .orElse(null);
     }
 
     public List<Booking> getAllBookings() {

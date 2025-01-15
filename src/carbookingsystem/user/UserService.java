@@ -15,11 +15,9 @@ public class UserService {
     }
 
     public User getUserById(UUID id) {
-        for(User user : getAllUsers()){
-            if(user.getId().equals(id)){
-                return user;
-            }
-        }
-        return null;
+        return getAllUsers().stream()
+                .filter(user -> user.getId().equals(id))
+                .findFirst()
+                .orElse(null);
     }
 }

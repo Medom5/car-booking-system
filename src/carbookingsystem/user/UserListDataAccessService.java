@@ -18,5 +18,4 @@ public class UserListDataAccessService implements UserDao {
     public List<User> getAllUsers() {
         return new ArrayList<>(users);
     }
-
 }

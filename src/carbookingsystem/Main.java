@@ -114,10 +114,7 @@ public class Main {
                 System.out.println("User" + user + " has no booked cars");
                 return;
             }
-
-            for (Car userBookedcar : userBookedCars) {
-                System.out.println(userBookedcar);
-            }
+            userBookedCars.forEach(System.out::println);
         }, () -> System.out.println("No user found with id " + userId));
 
 
@@ -129,20 +126,20 @@ public class Main {
             System.out.println("No bookings found in the system");
             return;
         }
-        for (Booking booking : bookings) {
-            System.out.println(booking);
-        }
+
+        bookings.forEach(System.out::println);
     }
 
     private static boolean displayAvailableCars(BookingService bookingService, boolean isElectric) {
         List<Car> availableCars = isElectric ? bookingService.getAvailableElectricCars() : bookingService.getAvailableCars();
+
         if (availableCars.isEmpty()) {
             System.out.println("There are no available cars");
             return false;
         }
-        for (Car car : availableCars) {
-            System.out.println(car);
-        }
+
+        availableCars.forEach(System.out::println);
+
         return true;
     }
 
@@ -152,9 +149,9 @@ public class Main {
             System.out.println("No users found in the system");
             return false;
         }
-        for (User user : allUsers) {
-            System.out.println(user);
-        }
+
+        allUsers.forEach(System.out::println);
+
         return true;
     }
 
