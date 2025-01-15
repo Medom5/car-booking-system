@@ -13,7 +13,9 @@ import carbookingsystem.user.UserDao;
 import carbookingsystem.user.UserService;
 
 
+import javax.swing.text.html.Option;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 import java.util.UUID;
 
@@ -82,17 +84,11 @@ public class Main {
 
         try {
             UUID userUUID = UUID.fromString(userId);
-            User user = userService.getUserById(userUUID);
-            if (user == null) {
-                System.out.println("No user found with id " + userId);
-            } else {
+
+            Optional.ofNullable(userService.getUserById(userUUID)).ifPresentOrElse(user -> {
                 UUID bookingId = bookingService.bookCar(user, regNumber);
-                String completionMessage = """
-                        Successfully booked car with reg number %s for user %s
-                        Booking ref: %s
-                        """.formatted(regNumber, userId, bookingId);
-                System.out.println(completionMessage);
-            }
+                System.out.printf("Successfully booked car with reg number %s for user %s\nBooking ref: %s%n", regNumber, userId, bookingId);
+            }, () -> System.out.println("No user found with id " + userId));
         } catch (IllegalArgumentException e) {
             System.out.println("Invalid User ID format: " + e.getMessage());
         } catch (Exception e) {
@@ -109,21 +105,22 @@ public class Main {
         System.out.println("Select user Id:");
         String userId = scanner.nextLine();
 
-        User user = userService.getUserById(UUID.fromString(userId));
-        if (user == null) {
-            System.out.println("No user found with id " + userId);
-            return;
-        }
+        Optional<User> userOptional = Optional.ofNullable(userService.getUserById(UUID.fromString(userId)));
 
-        List<Car> userBookedCars = bookingService.getUserBookedCars(user.getId());
+        userOptional.ifPresentOrElse(user -> {
+            List<Car> userBookedCars = bookingService.getUserBookedCars(user.getId());
 
-        if (userBookedCars.isEmpty()) {
-            System.out.println("User" + user + " has no booked cars");
-            return;
-        }
-        for (Car userBookedcar : userBookedCars) {
-            System.out.println(userBookedcar);
-        }
+            if (userBookedCars.isEmpty()) {
+                System.out.println("User" + user + " has no booked cars");
+                return;
+            }
+
+            for (Car userBookedcar : userBookedCars) {
+                System.out.println(userBookedcar);
+            }
+        }, () -> System.out.println("No user found with id " + userId));
+
+
     }
 
     private static void displayAllBookings(BookingService bookingService) {
