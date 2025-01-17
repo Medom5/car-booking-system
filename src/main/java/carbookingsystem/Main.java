@@ -7,10 +7,7 @@ import carbookingsystem.car.Car;
 import carbookingsystem.car.CarDao;
 import carbookingsystem.car.CarService;
 import carbookingsystem.exceptions.InvalidNumberException;
-import carbookingsystem.user.User;
-import carbookingsystem.user.UserCsvDataAccessService;
-import carbookingsystem.user.UserDao;
-import carbookingsystem.user.UserService;
+import carbookingsystem.user.*;
 
 
 import java.util.List;
@@ -21,7 +18,7 @@ import java.util.UUID;
 public class Main {
     public static void main(String[] args) {
 
-        UserDao userDao = new UserCsvDataAccessService("users.csv");
+        UserDao userDao = new UserFakerDataAccessService();
         UserService userService = new UserService(userDao);
 
         BookingDao bookingDao = new BookingDao();
