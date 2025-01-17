@@ -1,0 +1,14 @@
+# Exclude IntelliJ IDEA settings
+.idea/
+
+# Exclude compiled Java class files
+*.class
+
+# Exclude log files
+*.log
+
+# Exclude build directories
+out/
+build/
+target/
+
