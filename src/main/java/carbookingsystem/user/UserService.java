@@ -4,18 +4,18 @@ import java.util.List;
 import java.util.UUID;
 
 public class UserService {
-    private final List<User> allUsers;
+    private final UserDao userDao;
 
     public UserService(UserDao userDao) {
-        this.allUsers = userDao.getAllUsers(); // replaced  userDao with list to keep java faker random result and not  override users on each call
+        this.userDao =  userDao;
     }
 
     public List<User> getAllUsers() {
-        return allUsers;
+        return userDao.getAllUsers();
     }
 
     public User getUserById(UUID id) {
-        return allUsers.stream()
+        return getAllUsers().stream()
                 .filter(user -> user.getId().equals(id))
                 .findFirst()
                 .orElse(null);

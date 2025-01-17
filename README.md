@@ -8,6 +8,8 @@ This project is a comprehensive car booking system implemented in Java, designed
 
 ## Demo
 
+![project demo](assets/java.gif)
+
 ## Features
 
 - **User Management**: Handle user registrations and maintain user profiles.
@@ -86,8 +88,8 @@ Locate the main class `carbookingsystem.Main` and run it.
     ```
 
 ## Testing
-
-To run the unit tests, use the following Maven command:
+- **Mockito** was used for mocking dependencies, allowing for isolated unit tests that focus on individual components of the system without needing real dependencies like databases or external services.
+- To run the unit tests, use the following Maven command:
 
 ```bash
 mvn test
