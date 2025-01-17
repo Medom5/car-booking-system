@@ -21,9 +21,7 @@ import java.util.UUID;
 public class Main {
     public static void main(String[] args) {
 
-        final String filePath = "src/carbookingsystem/users.csv";
-
-        UserDao userDao = new UserCsvDataAccessService(filePath);
+        UserDao userDao = new UserCsvDataAccessService("users.csv");
         UserService userService = new UserService(userDao);
 
         BookingDao bookingDao = new BookingDao();

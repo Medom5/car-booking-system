@@ -12,14 +12,16 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class UserCsvDataAccessService implements UserDao {
-    private final String filePath;
-
-    public UserCsvDataAccessService(final String filePath) {
-        this.filePath = filePath;
+    private final  String fileName;
+    public UserCsvDataAccessService(final String fileName) {
+        this.fileName = fileName;
     }
 
     @Override
     public List<User> getAllUsers() {
+
+        String filePath = getClass().getClassLoader().getResource(fileName).getPath();
+
         try (Stream<String> lines = Files.lines(Paths.get(filePath))) {
             return  lines
                     .map(line -> line.split(","))
