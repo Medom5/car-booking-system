@@ -29,17 +29,18 @@ public class BookingTest {
 
     @Test
     void testBookingSetter() {
-        Car car = new Car("1234", new BigDecimal("88.00"), Brand.TESLA, true);
-        User user = new User(UUID.randomUUID(), "Peter");
-        UUID uuid = UUID.randomUUID();
-        LocalDateTime now = LocalDateTime.now();
-        Booking booking = new Booking(uuid, car, user, now);
 
-        booking.setBookingId(UUID.randomUUID());
-        booking.setCar(new Car("5678", new BigDecimal("83.00"), Brand.HONDA, false));
-        booking.setUser(new User(UUID.randomUUID(), "Roland"));
-        booking.setBookingTime(LocalDateTime.now());
-        booking.setCancelled(true);
+        Booking booking = new Booking(UUID.randomUUID(), new Car("5678", new BigDecimal("83.00"), Brand.HONDA, false), new User(UUID.randomUUID(), "Roland"), LocalDateTime.now());
+
+        UUID uuid = UUID.randomUUID();
+        Car car = new Car("1234", new BigDecimal("88.00"), Brand.TESLA, true);
+        LocalDateTime now = LocalDateTime.now();
+        User user = new User(UUID.randomUUID(), "Peter");
+
+        booking.setBookingId(uuid);
+        booking.setCar(car);
+        booking.setUser(user);
+        booking.setBookingTime(now);
 
         assertEquals(uuid, booking.getBookingId());
         assertEquals(car, booking.getCar());
@@ -82,6 +83,5 @@ public class BookingTest {
                     ", isCancelled=false}";
 
             assertEquals(expectedToString, booking.toString());
-
     }
 }

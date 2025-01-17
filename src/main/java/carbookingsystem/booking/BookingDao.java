@@ -16,7 +16,6 @@ public class BookingDao {
     }
 
     public Booking getBooking(UUID bookingId) {
-
         return bookings.stream()
                 .filter(booking -> booking.getBookingId().equals(bookingId))
                 .findFirst()
@@ -30,4 +29,5 @@ public class BookingDao {
     public void cancelBooking(Booking booking) {
         booking.setCancelled(true);
     }
+
 }

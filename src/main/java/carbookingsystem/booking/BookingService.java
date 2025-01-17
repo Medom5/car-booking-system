@@ -65,7 +65,7 @@ public class BookingService {
         return getCars(carService.getAllElectricCars());
     }
 
-    public List<Car> getCars(List<Car> cars) {
+    private List<Car> getCars(List<Car> cars) {
         if (cars.isEmpty()) {
             return new ArrayList<>();
         }
@@ -90,11 +90,9 @@ public class BookingService {
     public void cancelBooking(UUID bookingId) {
         Booking booking = bookingDAO.getBooking(bookingId);
 
-        if (booking != null) {
-            bookingDAO.cancelBooking(booking);
+        if (booking == null) {
+            throw new IllegalStateException("No booking found with ID: " + bookingId);
         }
-
-        throw new IllegalStateException("No booking found with ID: " + bookingId);
+        bookingDAO.cancelBooking(booking);
     }
-
 }
